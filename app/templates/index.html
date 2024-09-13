@@ -4,148 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pomodoro Timer</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #2b5d7e;
-            color: white;
-        }
-        .container {
-            display: flex;
-            height: 100vh;
-        }
-        .sidebar {
-            width: 300px;
-            background-color: #1e4259;
-            padding: 20px;
-        }
-        .main-content {
-            flex-grow: 1;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .header {
-            display: flex;
-            justify-content: space-between;
-            width: 100%;
-            margin-bottom: 20px;
-        }
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-        }
-        .nav-buttons button {
-            background-color: transparent;
-            border: none;
-            color: white;
-            cursor: pointer;
-            margin-left: 10px;
-        }
-        .timer-container {
-            background-color: #387499;
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-        }
-        .timer-tabs {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 10px;
-        }
-        .timer-tabs button {
-            background-color: transparent;
-            border: none;
-            color: white;
-            cursor: pointer;
-            margin: 0 10px;
-            font-size: 16px;
-        }
-        .timer-tabs button.active {
-            border-bottom: 2px solid white;
-        }
-        #timer {
-            font-size: 80px;
-            margin: 20px 0;
-        }
-        #startBtn {
-            background-color: #ffffff;
-            color: #387499;
-            border: none;
-            padding: 10px 20px;
-            font-size: 18px;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-        .task-list {
-            margin-top: 20px;
-        }
-        .task-list h2 {
-            margin-bottom: 10px;
-        }
-        #taskInput {
-            width: 100%;
-            padding: 5px;
-            margin-bottom: 10px;
-        }
-        #taskList {
-            list-style-type: none;
-            padding: 0;
-        }
-        #taskList li {
-            background-color: #387499;
-            margin-bottom: 5px;
-            padding: 5px;
-            border-radius: 3px;
-        }
-        .settings-modal, .dashboard-modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.4);
-        }
-        .modal-content {
-            background-color: #1e4259;
-            margin: 15% auto;
-            padding: 20px;
-            border-radius: 5px;
-            width: 80%;
-            max-width: 600px;
-        }
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        .close:hover {
-            color: #fff;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
     <div class="container">
-        <div class="sidebar">
-            <h2>Tasks</h2>
-            <input type="text" id="taskInput" placeholder="Add a new task">
-            <ul id="taskList"></ul>
+        <div class="button-panel left">
+            <button id="startBtn" class="svg-button">
+                <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            </button>
+            <button id="settingsBtn" class="svg-button">
+                <svg viewBox="0 0 24 24"><path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.07-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.74,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.8,11.69,4.8,12s0.02,0.64,0.07,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.44-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.47-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z"/></svg>
+            </button>
+            <button id="dashboardBtn" class="svg-button">
+                <svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+            </button>
         </div>
         <div class="main-content">
-            <div class="header">
-                <div class="logo">Pomodoro Timer</div>
-                <div class="nav-buttons">
-                    <button id="dashboardBtn">Dashboard</button>
-                    <button id="settingsBtn">Settings</button>
-                </div>
-            </div>
+            <h1>Pomodoro Timer</h1>
             <div class="timer-container">
                 <div class="timer-tabs">
                     <button class="timer-tab active" data-time="25">Pomodoro</button>
@@ -153,161 +28,49 @@
                     <button class="timer-tab" data-time="15">Long Break</button>
                 </div>
                 <div id="timer">25:00</div>
-                <button id="startBtn">START</button>
+                <button id="controlBtn">START</button>
             </div>
         </div>
-    </div>
-
-    <div id="settingsModal" class="settings-modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Settings</h2>
-            <label for="pomodoroTime">Pomodoro Time (minutes):</label>
-            <input type="number" id="pomodoroTime" value="25" min="1" max="60">
-            <label for="shortBreakTime">Short Break Time (minutes):</label>
-            <input type="number" id="shortBreakTime" value="5" min="1" max="30">
-            <label for="longBreakTime">Long Break Time (minutes):</label>
-            <input type="number" id="longBreakTime" value="15" min="1" max="60">
-            <button id="saveSettings">Save Settings</button>
+        <div class="task-panel right">
+            <h2>Tasks</h2>
+            <input type="text" id="taskInput" placeholder="Add a new task">
+            <ul id="taskList"></ul>
         </div>
     </div>
 
-    <div id="dashboardModal" class="dashboard-modal">
+    <div id="settingsModal" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
+            <h2>Settings</h2>
+            <div class="setting-item">
+                <label for="pomodoroTime">Pomodoro Time (minutes):</label>
+                <input type="number" id="pomodoroTime" value="25" min="1" max="60">
+            </div>
+            <div class="setting-item">
+                <label for="shortBreakTime">Short Break Time (minutes):</label>
+                <input type="number" id="shortBreakTime" value="5" min="1" max="30">
+            </div>
+            <div class="setting-item">
+                <label for="longBreakTime">Long Break Time (minutes):</label>
+                <input type="number" id="longBreakTime" value="15" min="1" max="60">
+            </div>
+            <div class="setting-item">
+                <label for="invertLayout">Invert Layout:</label>
+                <input type="checkbox" id="invertLayout">
+            </div>
+            <button id="saveSettings">Save Settings</button>
+            <button class="close-modal">&times;</button>
+        </div>
+    </div>
+
+    <div id="dashboardModal" class="modal">
+        <div class="modal-content">
             <h2>Dashboard</h2>
             <div id="focusChart"></div>
+            <button class="close-modal">&times;</button>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        let timer;
-        let timeLeft = 25 * 60;
-        let isRunning = false;
-        let currentMode = 'pomodoro';
-        const timerDisplay = document.getElementById('timer');
-        const startBtn = document.getElementById('startBtn');
-        const timerTabs = document.querySelectorAll('.timer-tab');
-        const taskInput = document.getElementById('taskInput');
-        const taskList = document.getElementById('taskList');
-        const settingsBtn = document.getElementById('settingsBtn');
-        const dashboardBtn = document.getElementById('dashboardBtn');
-        const settingsModal = document.getElementById('settingsModal');
-        const dashboardModal = document.getElementById('dashboardModal');
-        const closeButtons = document.querySelectorAll('.close');
-        const saveSettingsBtn = document.getElementById('saveSettings');
-
-        function updateDisplay() {
-            const minutes = Math.floor(timeLeft / 60);
-            const seconds = timeLeft % 60;
-            timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-        }
-
-        function startTimer() {
-            if (!isRunning) {
-                isRunning = true;
-                startBtn.textContent = 'PAUSE';
-                timer = setInterval(() => {
-                    timeLeft--;
-                    updateDisplay();
-                    if (timeLeft === 0) {
-                        clearInterval(timer);
-                        alert('Time is up!');
-                        isRunning = false;
-                        startBtn.textContent = 'START';
-                    }
-                }, 1000);
-            } else {
-                clearInterval(timer);
-                isRunning = false;
-                startBtn.textContent = 'START';
-            }
-        }
-
-        function resetTimer(minutes) {
-            clearInterval(timer);
-            timeLeft = minutes * 60;
-            isRunning = false;
-            startBtn.textContent = 'START';
-            updateDisplay();
-        }
-
-        startBtn.addEventListener('click', startTimer);
-
-        timerTabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                timerTabs.forEach(t => t.classList.remove('active'));
-                tab.classList.add('active');
-                const time = parseInt(tab.dataset.time);
-                resetTimer(time);
-                currentMode = tab.textContent.toLowerCase().replace(' ', '-');
-            });
-        });
-
-        taskInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter' && this.value) {
-                const li = document.createElement('li');
-                li.textContent = this.value;
-                taskList.appendChild(li);
-                this.value = '';
-            }
-        });
-
-        settingsBtn.addEventListener('click', () => {
-            settingsModal.style.display = 'block';
-        });
-
-        dashboardBtn.addEventListener('click', () => {
-            dashboardModal.style.display = 'block';
-            renderFocusChart();
-        });
-
-        closeButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                settingsModal.style.display = 'none';
-                dashboardModal.style.display = 'none';
-            });
-        });
-
-        saveSettingsBtn.addEventListener('click', () => {
-            const pomodoroTime = document.getElementById('pomodoroTime').value;
-            const shortBreakTime = document.getElementById('shortBreakTime').value;
-            const longBreakTime = document.getElementById('longBreakTime').value;
-
-            timerTabs[0].dataset.time = pomodoroTime;
-            timerTabs[1].dataset.time = shortBreakTime;
-            timerTabs[2].dataset.time = longBreakTime;
-
-            resetTimer(pomodoroTime);
-            settingsModal.style.display = 'none';
-        });
-
-        function renderFocusChart() {
-            const ctx = document.getElementById('focusChart').getContext('2d');
-            new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-                    datasets: [{
-                        label: 'Focus Hours',
-                        data: [2, 4, 3, 5, 2, 3, 1],
-                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                        borderColor: 'rgba(75, 192, 192, 1)',
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    }
-                }
-            });
-        }
-
-        updateDisplay();
-    </script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
