@@ -17,6 +17,7 @@ let timer;
 let timeLeft = 25 * 60;
 let isRunning = false;
 let currentMode = 'pomodoro';
+let completedPomodoros = 0;
 
 // Update timer display
 function updateDisplay() {
@@ -25,7 +26,7 @@ function updateDisplay() {
     timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 }
 
-// Start or pause timer
+// Toggle timer (start/pause)
 function toggleTimer() {
     if (!isRunning) {
         startTimer();
@@ -43,7 +44,11 @@ function startTimer() {
         updateDisplay();
         if (timeLeft === 0) {
             clearInterval(timer);
-            showNotification('Pomodoro Timer', `Your ${currentMode} session is complete!`);
+            if (currentMode === 'pomodoro') {
+                completedPomodoros++;
+                updateDashboard();
+            }
+            alert(`${currentMode.charAt(0).toUpperCase() + currentMode.slice(1)} completed!`);
             isRunning = false;
             controlBtn.textContent = 'START';
         }
@@ -129,51 +134,21 @@ function loadSettings() {
 
 // Apply layout based on invert setting
 function applyLayout(invert) {
-    const buttonPanel = document.querySelector('.button-panel');
-    const taskPanel = document.querySelector('.task-panel');
+    const container = document.querySelector('.container');
     if (invert) {
-        buttonPanel.classList.remove('left');
-        buttonPanel.classList.add('right');
-        taskPanel.classList.remove('right');
-        taskPanel.classList.add('left');
+        container.classList.add('inverted');
     } else {
-        buttonPanel.classList.remove('right');
-        buttonPanel.classList.add('left');
-        taskPanel.classList.remove('left');
-        taskPanel.classList.add('right');
+        container.classList.remove('inverted');
     }
 }
 
-// Render focus chart in dashboard
-function renderFocusChart() {
-    const ctx = document.getElementById('focusChart').getContext('2d');
-    new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-            datasets: [{
-                label: 'Focus Hours',
-                data: [2, 4, 3, 5, 2, 3, 1],
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                borderColor: 'rgba(75, 192, 192, 1)',
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
-}
-
-// Show notification
-function showNotification(title, body) {
-    if ('Notification' in window && Notification.permission === 'granted') {
-        new Notification(title, { body });
-    }
+// Update dashboard
+function updateDashboard() {
+    const dashboardContent = document.getElementById('dashboardContent');
+    dashboardContent.innerHTML = `
+        <h3>Statistics</h3>
+        <p>Completed Pomodoros: ${completedPomodoros}</p>
+    `;
 }
 
 // Event Listeners
@@ -196,7 +171,7 @@ taskInput.addEventListener('keypress', function(e) {
 settingsBtn.addEventListener('click', () => settingsModal.style.display = 'block');
 dashboardBtn.addEventListener('click', () => {
     dashboardModal.style.display = 'block';
-    renderFocusChart();
+    updateDashboard();
 });
 
 closeButtons.forEach(button => {
@@ -212,28 +187,12 @@ saveSettingsBtn.addEventListener('click', () => {
     settingsModal.style.display = 'none';
 });
 
-// Close modals when clicking outside
-window.addEventListener('click', (event) => {
-    if (event.target === settingsModal) settingsModal.style.display = 'none';
-    if (event.target === dashboardModal) dashboardModal.style.display = 'none';
-});
-
-// Keyboard shortcut for starting/pausing the timer (spacebar)
-document.addEventListener('keydown', (event) => {
-    if (event.code === 'Space' && document.activeElement.tagName !== 'INPUT') {
-        event.preventDefault();
-        toggleTimer();
-    }
-});
-
 // Initialize
 function init() {
     loadTasks();
     loadSettings();
     updateDisplay();
-    if ('Notification' in window) {
-        Notification.requestPermission();
-    }
+    updateDashboard();
 }
 
 init();
