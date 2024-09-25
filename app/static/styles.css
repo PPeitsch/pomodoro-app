@@ -141,6 +141,8 @@ body {
     word-break: break-word;
     max-width: calc(100% - 90px);
     margin-right: 10px;
+    line-height: 1.2em;
+    max-height: 2.4em;
 }
 
 .task-buttons {
@@ -148,6 +150,7 @@ body {
     align-items: center;
     justify-content: flex-end;
     width: 80px;
+    flex-shrink: 0;
 }
 
 .task-buttons .svg-button {
@@ -156,7 +159,6 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 0;
 }
 
 .task-buttons .svg-button svg {
@@ -195,6 +197,8 @@ body {
     width: 80%;
     max-width: 400px;
     position: relative;
+    max-height: 80vh;
+    overflow-y: auto;
 }
 
 .close-modal {
@@ -206,6 +210,7 @@ body {
     position: absolute;
     top: 10px;
     right: 20px;
+    line-height: 1;
 }
 
 .setting-item {
@@ -237,8 +242,21 @@ body {
     margin-top: 20px;
 }
 
+.task-actions .svg-button {
+    flex: 0 0 auto;
+    margin: 0 5px;
+}
+
+#taskModalTitle {
+    font-size: 18px;
+    margin-bottom: 10px;
+    word-wrap: break-word;
+    padding-right: 20px; /* Espacio para el botón de cerrar */
+}
+
 #taskModalDescription {
     margin-bottom: 20px;
+    word-wrap: break-word;
 }
 
 @media (max-width: 768px) {
