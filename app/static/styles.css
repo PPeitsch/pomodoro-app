@@ -145,6 +145,23 @@ body {
     max-height: 2.4em;
 }
 
+.task-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    min-width: 90px;
+}
+
+.task-status {
+    font-size: 0.9em;
+    margin-bottom: 2px;
+}
+
+.task-date {
+    font-size: 0.8em;
+    color: #ccc;
+}
+
 .task-buttons {
     display: flex;
     align-items: center;
@@ -181,7 +198,7 @@ body {
 .modal {
     display: none;
     position: fixed;
-    z-index: 1;
+    z-index: 1000;
     left: 0;
     top: 0;
     width: 100%;
@@ -195,10 +212,8 @@ body {
     padding: 20px;
     border-radius: 5px;
     width: 80%;
-    max-width: 400px;
+    max-width: 600px;
     position: relative;
-    max-height: 80vh;
-    overflow-y: auto;
 }
 
 .close-modal {
@@ -210,7 +225,6 @@ body {
     position: absolute;
     top: 10px;
     right: 20px;
-    line-height: 1;
 }
 
 .setting-item {
@@ -247,6 +261,24 @@ body {
     margin: 0 5px;
 }
 
+#allTasksModal .modal-content {
+    width: 90%;
+    max-width: 600px;
+}
+
+.filter-options {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.filter-options input[type="date"] {
+    margin-right: 10px;
+}
+
+
 #taskModalTitle {
     font-size: 18px;
     margin-bottom: 10px;
@@ -257,6 +289,24 @@ body {
 #taskModalDescription {
     margin-bottom: 20px;
     word-wrap: break-word;
+}
+
+#allTasksList {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    max-height: 60vh;
+    overflow-y: auto;
+}
+
+#allTasksList li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 5px;
+    background-color: #387499;
+    border-radius: 3px;
 }
 
 @media (max-width: 768px) {

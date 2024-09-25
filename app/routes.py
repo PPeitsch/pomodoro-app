@@ -1,6 +1,6 @@
 from flask import render_template, jsonify, request
 from app import app
-from database import get_tasks, save_tasks, get_settings, save_settings, save_session, get_sessions
+from database import get_tasks, save_tasks, get_settings, save_settings, save_session, get_sessions, get_all_tasks
 
 
 @app.route('/')
@@ -10,14 +10,13 @@ def index():
 
 @app.route('/get_tasks')
 def get_tasks_route():
-    tasks = get_tasks()
-    return jsonify([{'text': task['task'], 'status': task['status']} for task in tasks])
+    return jsonify(get_tasks())
 
 
 @app.route('/save_tasks', methods=['POST'])
 def save_tasks_route():
     tasks = request.json['tasks']
-    save_tasks([{'task': task['text'], 'status': task['status']} for task in tasks])
+    save_tasks(tasks)
     return jsonify({'status': 'success'})
 
 
@@ -43,6 +42,11 @@ def save_session_route():
 @app.route('/get_sessions')
 def get_sessions_route():
     return jsonify(get_sessions())
+
+
+@app.route('/get_all_tasks')
+def get_all_tasks_route():
+    return jsonify(get_all_tasks())
 
 
 @app.route('/<path:filename>')

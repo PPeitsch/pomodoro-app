@@ -24,6 +24,11 @@
                     <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"></path>
                 </svg>
             </button>
+            <button id="allTasksBtn" class="svg-button">
+                <svg viewBox="0 0 24 24" fill="white">
+                    <path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"></path>
+                </svg>
+            </button>
         </div>
 
         <div class="main-content">
@@ -106,6 +111,20 @@
             </div>
         </div>
     </div>
+
+    <div id="allTasksModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>All Tasks</h2>
+            <div class="filter-options">
+                <input type="date" id="dateFilter">
+                <label><input type="checkbox" id="archivedFilter"> Show Archived</label>
+                <label><input type="checkbox" id="completedFilter"> Show Completed</label>
+            </div>
+            <ul id="allTasksList"></ul>
+        </div>
+    </div>
+
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="{{ url_for('static', filename='script.js') }}"></script>

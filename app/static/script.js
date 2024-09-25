@@ -18,6 +18,13 @@ const taskModalDescription = document.getElementById('taskModalDescription');
 const taskDeleteBtn = document.getElementById('taskDelete');
 const taskArchiveBtn = document.getElementById('taskArchive');
 const taskStatusBtn = document.getElementById('taskStatus');
+const allTasksBtn = document.getElementById('allTasksBtn');
+const allTasksModal = document.getElementById('allTasksModal');
+const allTasksList = document.getElementById('allTasksList');
+const dateFilter = document.getElementById('dateFilter');
+const archivedFilter = document.getElementById('archivedFilter');
+const completedFilter = document.getElementById('completedFilter');
+const closeModal = allTasksModal.querySelector('.close-modal');
 
 // Timer variables
 let timer;
@@ -223,6 +230,56 @@ function cycleTaskStatus(taskElement) {
         openTaskModal(taskElement);
     }
 }
+
+
+allTasksBtn.addEventListener('click', () => {
+    allTasksModal.style.display = 'block';
+    loadAllTasks();
+});
+
+closeModal.addEventListener('click', () => {
+    allTasksModal.style.display = 'none';
+});
+
+window.addEventListener('click', (event) => {
+    if (event.target === allTasksModal) {
+        allTasksModal.style.display = 'none';
+    }
+});
+
+function loadAllTasks() {
+    fetch('/get_all_tasks')
+        .then(response => response.json())
+        .then(tasks => {
+            renderFilteredTasks(tasks);
+        });
+}
+
+function renderFilteredTasks(tasks) {
+    const filteredTasks = tasks.filter(task => {
+        const dateMatch = !dateFilter.value || new Date(task.date).toDateString() === new Date(dateFilter.value).toDateString();
+        const archivedMatch = archivedFilter.checked || !task.archived;
+        const completedMatch = completedFilter.checked || task.status !== 'done';
+        return dateMatch && archivedMatch && completedMatch;
+    });
+
+    allTasksList.innerHTML = '';
+    filteredTasks.forEach(task => {
+        const li = document.createElement('li');
+        li.innerHTML = `
+            <span class="task-text">${task.text}</span>
+            <div class="task-info">
+                <span class="task-status">${task.status}</span>
+                <span class="task-date">${task.date}</span>
+            </div>
+        `;
+        allTasksList.appendChild(li);
+    });
+}
+
+dateFilter.addEventListener('change', () => loadAllTasks());
+archivedFilter.addEventListener('change', () => loadAllTasks());
+completedFilter.addEventListener('change', () => loadAllTasks());
 
 // Save settings to database
 function saveSettings() {

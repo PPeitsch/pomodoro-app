@@ -14,7 +14,11 @@ def init_db():
 
     # Create tasks table
     c.execute('''CREATE TABLE IF NOT EXISTS tasks
-                 (id INTEGER PRIMARY KEY, task TEXT, status TEXT)''')
+                 (id INTEGER PRIMARY KEY, 
+                  task TEXT, 
+                  status TEXT DEFAULT 'pending',
+                  date TEXT DEFAULT CURRENT_DATE,
+                  archived INTEGER DEFAULT 0)''')
 
     # Create settings table
     c.execute('''CREATE TABLE IF NOT EXISTS settings
@@ -32,17 +36,18 @@ def init_db():
 
 def get_tasks():
     conn = get_db_connection()
-    tasks = conn.execute('SELECT task, status FROM tasks').fetchall()
+    tasks = conn.execute('SELECT id, task, status FROM tasks WHERE archived = 0').fetchall()
     conn.close()
-    return [{'task': task['task'], 'status': task['status']} for task in tasks]
+    return [{'id': task['id'], 'text': task['task'], 'status': task['status']} for task in tasks]
 
 
 def save_tasks(tasks):
     conn = get_db_connection()
     c = conn.cursor()
-    c.execute('DELETE FROM tasks')
+    c.execute('UPDATE tasks SET archived = 1')  # Archive all existing tasks
     for task in tasks:
-        c.execute('INSERT INTO tasks (task, status) VALUES (?, ?)', (task['task'], task['status']))
+        c.execute('INSERT OR REPLACE INTO tasks (id, task, status, archived) VALUES (?, ?, ?, 0)',
+                  (task.get('id'), task['text'], task['status']))
     conn.commit()
     conn.close()
 
@@ -95,6 +100,19 @@ def get_sessions():
     return [{'timestamp': session['timestamp']} for session in sessions]
 
 
+def get_all_tasks():
+    conn = get_db_connection()
+    tasks = conn.execute('SELECT * FROM tasks').fetchall()
+    conn.close()
+    return [{
+        'id': task['id'],
+        'text': task['task'],
+        'status': task['status'],
+        'date': task['date'],
+        'archived': bool(task['archived'])
+    } for task in tasks]
+
+
 # Initialize the database
 init_db()
 
@@ -118,3 +136,4 @@ get_settings = db_operation(get_settings)
 save_settings = db_operation(save_settings)
 save_session = db_operation(save_session)
 get_sessions = db_operation(get_sessions)
+get_all_tasks = db_operation(get_all_tasks)
