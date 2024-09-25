@@ -1,7 +1,12 @@
-body {
-    font-family: Arial, sans-serif;
+body, html {
     margin: 0;
     padding: 0;
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    font-family: Arial, sans-serif;
     background-color: #2b5d7e;
     color: white;
 }
@@ -9,6 +14,7 @@ body {
 .container {
     display: flex;
     height: 100vh;
+    overflow: hidden;
 }
 
 .button-panel {
@@ -27,7 +33,9 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     order: 2;
+    overflow: hidden;
 }
 
 .task-panel {
@@ -35,14 +43,10 @@ body {
     background-color: #1e4259;
     padding: 20px;
     order: 3;
-}
-
-.container.inverted .button-panel {
-    order: 3;
-}
-
-.container.inverted .task-panel {
-    order: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
 }
 
 .svg-button {
@@ -102,20 +106,74 @@ body {
 
 #taskInput {
     width: 100%;
-    padding: 5px;
+    padding: 10px;
     margin-bottom: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
 }
 
 #taskList {
     list-style-type: none;
     padding: 0;
+    margin: 0;
+    overflow-y: auto;
+    flex-grow: 1;
 }
 
 #taskList li {
     background-color: #387499;
     margin-bottom: 5px;
-    padding: 5px;
+    padding: 10px;
     border-radius: 3px;
+    display: flex;
+    align-items: center;
+    min-height: 60px;
+}
+
+.task-text {
+    flex-grow: 1;
+    cursor: pointer;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    word-break: break-word;
+    max-width: calc(100% - 90px);
+    margin-right: 10px;
+}
+
+.task-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 80px;
+}
+
+.task-buttons .svg-button {
+    margin-left: 5px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0;
+}
+
+.task-buttons .svg-button svg {
+    width: 20px;
+    height: 20px;
+}
+
+.task-status-pending svg {
+    fill: #ffd700;
+}
+
+.task-status-in-progress svg {
+    fill: #1e90ff;
+}
+
+.task-status-done svg {
+    fill: #32cd32;
 }
 
 .modal {
@@ -171,4 +229,49 @@ body {
     margin: 4px 2px;
     cursor: pointer;
     border-radius: 5px;
+}
+
+.task-actions {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+#taskModalDescription {
+    margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .button-panel {
+        width: 100%;
+        height: 60px;
+        flex-direction: row;
+        justify-content: space-around;
+        order: 3;
+    }
+
+    .main-content {
+        order: 1;
+    }
+
+    .task-panel {
+        width: 100%;
+        height: auto;
+        max-height: 40vh;
+        order: 2;
+    }
+}
+
+@media (max-height: 600px) {
+    .main-content {
+        padding: 10px;
+    }
+
+    #timer {
+        font-size: 60px;
+    }
 }
