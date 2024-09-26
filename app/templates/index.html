@@ -9,73 +9,122 @@
 <body>
     <div class="container">
         <div class="button-panel">
-            <button id="startStopBtn" class="svg-button" title="Start/Stop Timer">
+            <button id="startStopBtn" class="svg-button">
                 <svg viewBox="0 0 24 24" fill="white">
-                    <path d="M8 5v14l11-7z"/>
+                    <path d="M8 5v14l11-7z"></path>
                 </svg>
             </button>
-            <button id="settingsBtn" class="svg-button" title="Settings">
+            <button id="settingsBtn" class="svg-button">
                 <svg viewBox="0 0 24 24" fill="white">
-                    <path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.07-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.74,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.8,11.69,4.8,12s0.02,0.64,0.07,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.44-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.47-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z"/>
+                    <path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.07-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.74,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.8,11.69,4.8,12s0.02,0.64,0.07,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.44-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.47-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z"></path>
                 </svg>
             </button>
-            <button id="dashboardBtn" class="svg-button" title="Dashboard">
+            <button id="dashboardBtn" class="svg-button">
                 <svg viewBox="0 0 24 24" fill="white">
-                    <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/>
+                    <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"></path>
+                </svg>
+            </button>
+            <button id="allTasksBtn" class="svg-button">
+                <svg viewBox="0 0 24 24" fill="white">
+                    <path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"></path>
                 </svg>
             </button>
         </div>
+
         <div class="main-content">
             <h1>Pomodoro Timer</h1>
+
             <div class="timer-container">
                 <div class="timer-tabs">
                     <button class="timer-tab active" data-time="25">Pomodoro</button>
                     <button class="timer-tab" data-time="5">Short Break</button>
                     <button class="timer-tab" data-time="15">Long Break</button>
                 </div>
+
                 <div id="timer">25:00</div>
+
                 <button id="controlBtn">START</button>
             </div>
         </div>
+
         <div class="task-panel">
             <h2>Tasks</h2>
-            <input type="text" id="taskInput" placeholder="Add a new task">
+            <input type="text" id="taskInput" placeholder="Add a new task...">
             <ul id="taskList"></ul>
         </div>
     </div>
 
     <div id="settingsModal" class="modal">
         <div class="modal-content">
+            <span class="close-modal">&times;</span>
             <h2>Settings</h2>
             <div class="setting-item">
                 <label for="pomodoroTime">Pomodoro Time (minutes):</label>
-                <input type="number" id="pomodoroTime" value="25" min="1" max="60">
+                <input type="number" id="pomodoroTime" min="1" max="60">
             </div>
             <div class="setting-item">
                 <label for="shortBreakTime">Short Break Time (minutes):</label>
-                <input type="number" id="shortBreakTime" value="5" min="1" max="30">
+                <input type="number" id="shortBreakTime" min="1" max="30">
             </div>
             <div class="setting-item">
                 <label for="longBreakTime">Long Break Time (minutes):</label>
-                <input type="number" id="longBreakTime" value="15" min="1" max="60">
+                <input type="number" id="longBreakTime" min="1" max="60">
             </div>
             <div class="setting-item">
                 <label for="invertLayout">Invert Layout:</label>
                 <input type="checkbox" id="invertLayout">
             </div>
             <button id="saveSettings">Save Settings</button>
-            <button class="close-modal">&times;</button>
         </div>
     </div>
 
     <div id="dashboardModal" class="modal">
         <div class="modal-content">
+            <span class="close-modal">&times;</span>
             <h2>Dashboard</h2>
             <div id="dashboardContent"></div>
             <canvas id="pomodoroChart"></canvas>
-            <button class="close-modal">&times;</button>
         </div>
     </div>
+
+    <div id="taskModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2 id="taskModalTitle">Task Details</h2>
+            <p id="taskModalDescription"></p>
+            <div class="task-actions">
+                <button id="taskDelete" class="svg-button">
+                    <svg viewBox="0 0 24 24" fill="white">
+                        <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"></path>
+                    </svg>
+                </button>
+                <button id="taskArchive" class="svg-button">
+                    <svg viewBox="0 0 24 24" fill="white">
+                        <path d="M20.54 5.23l-1.39-1.68C18.88 3.21 18.47 3 18 3H6c-.47 0-.88.21-1.16.55L3.46 5.23C3.17 5.57 3 6.02 3 6.5V19c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6.5c0-.48-.17-.93-.46-1.27zM12 17.5L6.5 12H10v-2h4v2h3.5L12 17.5zM5.12 5l.81-1h12l.94 1H5.12z"></path>
+                    </svg>
+                </button>
+                <button id="taskStatus" class="svg-button">
+                    <svg viewBox="0 0 24 24" fill="white">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="allTasksModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>All Tasks</h2>
+            <div class="filter-options">
+                <input type="date" id="dateFilter">
+                <label><input type="checkbox" id="archivedFilter"> Show Archived</label>
+                <label><input type="checkbox" id="completedFilter"> Show Completed</label>
+            </div>
+            <ul id="allTasksList"></ul>
+        </div>
+    </div>
+
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="{{ url_for('static', filename='script.js') }}"></script>

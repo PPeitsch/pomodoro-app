@@ -1,7 +1,18 @@
-body {
-    font-family: Arial, sans-serif;
+:root {
+    --status-pending: #ffd700;
+    --status-in-progress: #1e90ff;
+    --status-done: #32cd32;
+}
+
+body, html {
     margin: 0;
     padding: 0;
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    font-family: Arial, sans-serif;
     background-color: #2b5d7e;
     color: white;
 }
@@ -9,6 +20,7 @@ body {
 .container {
     display: flex;
     height: 100vh;
+    overflow: hidden;
 }
 
 .button-panel {
@@ -27,7 +39,9 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     order: 2;
+    overflow: hidden;
 }
 
 .task-panel {
@@ -35,14 +49,10 @@ body {
     background-color: #1e4259;
     padding: 20px;
     order: 3;
-}
-
-.container.inverted .button-panel {
-    order: 3;
-}
-
-.container.inverted .task-panel {
-    order: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
 }
 
 .svg-button {
@@ -102,40 +112,118 @@ body {
 
 #taskInput {
     width: 100%;
-    padding: 5px;
+    padding: 10px;
     margin-bottom: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
 }
 
 #taskList {
     list-style-type: none;
     padding: 0;
+    margin: 0;
+    overflow-y: auto;
+    flex-grow: 1;
 }
 
 #taskList li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     background-color: #387499;
     margin-bottom: 5px;
-    padding: 5px;
+    padding: 10px;
     border-radius: 3px;
+    min-height: 60px;
+}
+
+.task-text {
+    flex-grow: 1;
+    cursor: pointer;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    word-break: break-word;
+    max-width: calc(100% - 90px);
+    margin-right: 10px;
+    line-height: 1.2em;
+    max-height: 2.4em;
+    text-overflow: ellipsis;
+}
+
+.task-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    min-width: 90px;
+}
+
+.task-status {
+    font-size: 0.9em;
+    margin-bottom: 2px;
+}
+
+.task-date {
+    font-size: 0.8em;
+    color: #ccc;
+}
+
+.task-buttons {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.task-buttons .svg-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    margin: 0;
+}
+
+.task-buttons .svg-button svg {
+    width: 20px;
+    height: 20px;
+}
+
+.task-status-pending svg {
+    fill: var(--status-pending);
+}
+
+.task-status-in-progress svg {
+    fill: var(--status-in-progress);
+}
+
+.task-status-done svg {
+    fill: var(--status-done);
 }
 
 .modal {
     display: none;
     position: fixed;
-    z-index: 1;
+    z-index: 1000;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
     background-color: rgba(0,0,0,0.4);
+    overflow-y: auto;
 }
 
 .modal-content {
     background-color: #1e4259;
-    margin: 15% auto;
+    margin: 5vh auto;
     padding: 20px;
     border-radius: 5px;
     width: 80%;
-    max-width: 400px;
+    max-width: 600px;
+    max-height: 80vh;
+    overflow-y: auto;
     position: relative;
 }
 
@@ -171,4 +259,95 @@ body {
     margin: 4px 2px;
     cursor: pointer;
     border-radius: 5px;
+}
+
+.task-actions {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.task-actions .svg-button {
+    flex: 0 0 auto;
+    margin: 0 5px;
+}
+
+#allTasksModal .modal-content {
+    width: 90%;
+    max-width: 600px;
+}
+
+.filter-options {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.filter-options input[type="date"] {
+    margin-right: 10px;
+}
+
+
+#taskModalTitle {
+    font-size: 18px;
+    margin-bottom: 10px;
+    word-wrap: break-word;
+    padding-right: 20px;
+}
+
+#taskModalDescription {
+    margin-bottom: 20px;
+    word-wrap: break-word;
+}
+
+#allTasksList {
+    max-height: calc(80vh - 150px);
+    overflow-y: auto;
+}
+
+#allTasksList li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 5px;
+    background-color: #387499;
+    border-radius: 3px;
+}
+
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .button-panel {
+        width: 100%;
+        height: 60px;
+        flex-direction: row;
+        justify-content: space-around;
+        order: 3;
+    }
+
+    .main-content {
+        order: 1;
+    }
+
+    .task-panel {
+        width: 100%;
+        height: auto;
+        max-height: 40vh;
+        order: 2;
+    }
+}
+
+@media (max-height: 600px) {
+    .main-content {
+        padding: 10px;
+    }
+
+    #timer {
+        font-size: 60px;
+    }
 }
