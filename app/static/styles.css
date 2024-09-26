@@ -1,3 +1,9 @@
+:root {
+    --status-pending: #ffd700;
+    --status-in-progress: #1e90ff;
+    --status-done: #32cd32;
+}
+
 body, html {
     margin: 0;
     padding: 0;
@@ -122,12 +128,13 @@ body {
 }
 
 #taskList li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     background-color: #387499;
     margin-bottom: 5px;
     padding: 10px;
     border-radius: 3px;
-    display: flex;
-    align-items: center;
     min-height: 60px;
 }
 
@@ -143,6 +150,7 @@ body {
     margin-right: 10px;
     line-height: 1.2em;
     max-height: 2.4em;
+    text-overflow: ellipsis;
 }
 
 .task-info {
@@ -165,17 +173,17 @@ body {
 .task-buttons {
     display: flex;
     align-items: center;
-    justify-content: flex-end;
-    width: 80px;
-    flex-shrink: 0;
+    gap: 5px;
 }
 
 .task-buttons .svg-button {
-    margin-left: 5px;
-    padding: 5px;
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    margin: 0;
 }
 
 .task-buttons .svg-button svg {
@@ -184,15 +192,15 @@ body {
 }
 
 .task-status-pending svg {
-    fill: #ffd700;
+    fill: var(--status-pending);
 }
 
 .task-status-in-progress svg {
-    fill: #1e90ff;
+    fill: var(--status-in-progress);
 }
 
 .task-status-done svg {
-    fill: #32cd32;
+    fill: var(--status-done);
 }
 
 .modal {
@@ -204,15 +212,18 @@ body {
     width: 100%;
     height: 100%;
     background-color: rgba(0,0,0,0.4);
+    overflow-y: auto;
 }
 
 .modal-content {
     background-color: #1e4259;
-    margin: 15% auto;
+    margin: 5vh auto;
     padding: 20px;
     border-radius: 5px;
     width: 80%;
     max-width: 600px;
+    max-height: 80vh;
+    overflow-y: auto;
     position: relative;
 }
 
@@ -283,7 +294,7 @@ body {
     font-size: 18px;
     margin-bottom: 10px;
     word-wrap: break-word;
-    padding-right: 20px; /* Espacio para el botón de cerrar */
+    padding-right: 20px;
 }
 
 #taskModalDescription {
@@ -292,10 +303,7 @@ body {
 }
 
 #allTasksList {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    max-height: 60vh;
+    max-height: calc(80vh - 150px);
     overflow-y: auto;
 }
 
